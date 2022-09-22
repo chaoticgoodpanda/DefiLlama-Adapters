@@ -12,9 +12,9 @@ module.exports = {
       [
         "0xe46910336479f254723710d57e7b683f3315b22b", //ceUSDC
         "0x51e44ffad5c2b122c8b635671fcc8139dc636e82", //USDC
-        "0xe03494d0033687543a80c9b1ca7d6237f2ea8bd8", //FRAX        
+        "0xe03494d0033687543a80c9b1ca7d6237f2ea8bd8", //FRAX
       ],
       "evmos"
     ),
   },
-}; // node test.js projects/cronus/index.js
+}; // node test.js projects/cronus/-old.js

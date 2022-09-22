@@ -90,7 +90,7 @@ async function v3Pool(
   ).output;
   if (decimals !== 18) {
     // fix arbitrum usdc token with decimals 6
-    liquidity = liquidity / 10**(18 - decimals)
+    liquidity = liquidity / 10 ** (18 - decimals);
   }
   sdk.util.sumSingleBalance(balances, transform(token), liquidity);
 }
@@ -226,13 +226,13 @@ async function arbitrum(timestamp, ethBlock, chainBlocks) {
         contract.bTokenSymbol,
         balances,
         transform,
-        6,                      // bToken decimals
+        6 // bToken decimals
       );
     }
     return balances;
   }
 }
-// node test.js projects/deri/index.js
+// node test.js projects/deri/-old.js
 module.exports = {
   bsc: {
     tvl: bsc,

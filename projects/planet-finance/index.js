@@ -36,27 +36,27 @@ async function tvl(timestamp, ethBlock, chainBlocks) {
       chainBlocks.bsc,
       "bsc",
       abi.poolInfo
-    ),  // newFarm
+    ), // newFarm
   ]);
   const allPoolInfos = poolInfo1.concat(poolInfo2);
 
   const [poolTvl, wantSymbol] = await Promise.all([
     sdk.api.abi.multiCall({
-      calls: allPoolInfos.map(p => ({
-        target: p.output.strat
+      calls: allPoolInfos.map((p) => ({
+        target: p.output.strat,
       })),
       abi: abi.wantLockedTotal,
       chain: "bsc",
       block: chainBlocks.bsc,
     }),
     sdk.api.abi.multiCall({
-      calls: allPoolInfos.map(p => ({
-        target: p.output.want
+      calls: allPoolInfos.map((p) => ({
+        target: p.output.want,
       })),
       abi: "erc20:symbol",
       chain: "bsc",
       block: chainBlocks.bsc,
-    })
+    }),
   ]);
 
   for (let i = 0; i < poolTvl.output.length; i++) {
@@ -65,54 +65,49 @@ async function tvl(timestamp, ethBlock, chainBlocks) {
         token: allPoolInfos[i].output.want,
         balance: poolTvl.output[i].output,
       });
-
     } else {
-      const addr = replacements[allPoolInfos[i].output.want]
-        ?? allPoolInfos[i].output.want;
+      const addr =
+        replacements[allPoolInfos[i].output.want] ??
+        allPoolInfos[i].output.want;
       sdk.util.sumSingleBalance(
         balances,
         transform(addr),
         poolTvl.output[i].output
       );
-    };
-  };
+    }
+  }
 
-  await unwrapUniswapLPs(
-    balances,
-    lps,
-    chainBlocks.bsc,
-    "bsc",
-    transform
-  );
+  await unwrapUniswapLPs(balances, lps, chainBlocks.bsc, "bsc", transform);
 
   return balances;
-};
+}
 
 const compoundTVL1 = compoundExports(
-  '0xF54f9e7070A1584532572A6F640F09c606bb9A83',
-  'bsc',
-  '0x24664791B015659fcb71aB2c9C0d56996462082F',
-  '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-)
+  "0xF54f9e7070A1584532572A6F640F09c606bb9A83",
+  "bsc",
+  "0x24664791B015659fcb71aB2c9C0d56996462082F",
+  "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+);
 
 const compoundTVL2 = compoundExports(
-  '0x1e0C9D09F9995B95Ec4175aaA18b49f49f6165A3',
-  'bsc',
-  '0x190354707Ad8221bE30bF5f097fa51C9b1EbdB29',
-  '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-)
+  "0x1e0C9D09F9995B95Ec4175aaA18b49f49f6165A3",
+  "bsc",
+  "0x190354707Ad8221bE30bF5f097fa51C9b1EbdB29",
+  "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+);
 
-// node test.js projects/planet-finance/index.js
-module.exports = mergeExports([{
-  bsc: {
-    tvl,
-    staking: staking(
-      "0xb7eD4A5AF620B52022fb26035C565277035d4FD7",
-      "0x72B7D61E8fC8cF971960DD9cfA59B8C829D91991",
-      "bsc",
-    )
+// node test.js projects/planet-finance/-old.js
+module.exports = mergeExports([
+  {
+    bsc: {
+      tvl,
+      staking: staking(
+        "0xb7eD4A5AF620B52022fb26035C565277035d4FD7",
+        "0x72B7D61E8fC8cF971960DD9cfA59B8C829D91991",
+        "bsc"
+      ),
+    },
   },
-},
-{ bsc: compoundTVL1, },
-{ bsc: compoundTVL2, },
+  { bsc: compoundTVL1 },
+  { bsc: compoundTVL2 },
 ]);

@@ -155,28 +155,43 @@ async function calcTreasury(treasury, tokens, block, chain) {
   );
 
   tokenBalances.slice(6).forEach((balance) => {
-    sdk.util.sumSingleBalance(balances, `${chain}:${balance.input.target}`, balance.output);
+    sdk.util.sumSingleBalance(
+      balances,
+      `${chain}:${balance.input.target}`,
+      balance.output
+    );
   });
 
   return balances;
 }
 
 async function pool2(timestamp, block, chainBlocks) {
-  return await calcPool2(bshareRewardPoolAddress, poolLPs, chainBlocks.fantom, "fantom");
+  return await calcPool2(
+    bshareRewardPoolAddress,
+    poolLPs,
+    chainBlocks.fantom,
+    "fantom"
+  );
 }
 
 async function treasury(timestamp, block, chainBlocks) {
-  return await calcTreasury(treasuryAddress, treasuryTokens, chainBlocks.fantom, "fantom");  
+  return await calcTreasury(
+    treasuryAddress,
+    treasuryTokens,
+    chainBlocks.fantom,
+    "fantom"
+  );
 }
 
 module.exports = {
-  methodology: "Pool2 deposits consist of BASED/TOMB, BSHARE/FTM LP, g3CRV (geist stable LP on Curve) receipt tokens while the staking TVL consists of the BSHARES tokens locked within the Acropolis contract. Treasury consists of deposit fees accumulated from genesis pools as well as g3CRV pool",
+  methodology:
+    "Pool2 deposits consist of BASED/TOMB, BSHARE/FTM LP, g3CRV (geist stable LP on Curve) receipt tokens while the staking TVL consists of the BSHARES tokens locked within the Acropolis contract. Treasury consists of deposit fees accumulated from genesis pools as well as g3CRV pool",
   fantom: {
     tvl: async () => ({}),
     pool2,
     staking: staking(acropolisAddress, bshareTokenAddress, "fantom"),
-    treasury
+    treasury,
   },
 };
 
-// node test.js projects/based-finance/index.js
+// node test.js projects/based-finance/-old.js

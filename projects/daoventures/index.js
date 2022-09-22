@@ -69,7 +69,7 @@ async function tvl(timestamp, ethereumBlock, chainBlocks) {
   return { "usd-coin": balances };
 }
 
-// node test.js projects/daoventures/index.js
+// node test.js projects/daoventures/-old.js
 async function stakingTvl(timestamp, block) {
   let balances = {};
   let { output: balance } = await sdk.api.erc20.balanceOf({

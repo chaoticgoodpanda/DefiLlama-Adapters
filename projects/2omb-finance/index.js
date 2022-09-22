@@ -35,7 +35,7 @@ const omb3Tvl = async (chainBlocks) => {
 
       const getTokenBalance = (
         await sdk.api.abi.call({
-          abi: 'erc20:balanceOf',
+          abi: "erc20:balanceOf",
           target: token,
           params: ThreeOmbGenesisPoolsContract,
           chain: "fantom",
@@ -70,7 +70,8 @@ const omb3Tvl = async (chainBlocks) => {
     i += 1;
   } while (!poolInfoReturn);
 
-  if (!Object.keys(balances).length)  throw new Error('Bad length, something is wrong')
+  if (!Object.keys(balances).length)
+    throw new Error("Bad length, something is wrong");
 
   const transformAddress = await transformFantomAddress();
 
@@ -84,7 +85,7 @@ const omb3Tvl = async (chainBlocks) => {
 
   return balances;
 };
-// node test.js projects/2omb-finance/index.js
+// node test.js projects/2omb-finance/-old.js
 async function tvl(timestamp, block, chainBlocks) {
   let balances = await omb3Tvl(chainBlocks);
   delete balances[`fantom:${token}`];

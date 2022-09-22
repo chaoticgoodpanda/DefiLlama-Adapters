@@ -1,8 +1,8 @@
 const sdk = require("@defillama/sdk");
 const { transformPolygonAddress } = require("../helper/portedTokens");
-const contracts = require('./contracts.json');
+const contracts = require("./contracts.json");
 
-// node test.js projects/dfx/index.js
+// node test.js projects/dfx/-old.js
 function tvl(chain) {
   return async (timestamp, block, chainBlocks) => {
     const transform =
@@ -38,7 +38,7 @@ function tvl(chain) {
 
     return balances;
   };
-};
+}
 
 module.exports = {
   ethereum: {

@@ -75,4 +75,4 @@ module.exports = {
     tvl: getBscTvl,
     staking: stakings(addresses.bscElfiStaking, addresses.bscElfi, "bsc"),
   },
-}; // node test.js projects/elysia/index.js
+}; // node test.js projects/elysia/-old.js

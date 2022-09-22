@@ -5,12 +5,18 @@ const {
   getCohortsAndProxiesByChain,
   createMulticalls,
 } = require("../helper/unifarm");
-const { 
-  transformBscAddress, 
-  transformPolygonAddress 
-} = require('../helper/portedTokens');
-// node test.js projects/unifarm/index.js
-const _tvl = async (timestamp, ethBlock, chainBlocks, chain, transform = a => a) => {
+const {
+  transformBscAddress,
+  transformPolygonAddress,
+} = require("../helper/portedTokens");
+// node test.js projects/unifarm/-old.js
+const _tvl = async (
+  timestamp,
+  ethBlock,
+  chainBlocks,
+  chain,
+  transform = (a) => a
+) => {
   const block = chainBlocks[chain];
 
   const tokens = await getCohortTokensByChainName(chain);
@@ -19,7 +25,7 @@ const _tvl = async (timestamp, ethBlock, chainBlocks, chain, transform = a => a)
   let calls = createMulticalls(cohortAndProxies, tokens);
 
   const multiCallResult = await sdk.api.abi.multiCall({
-    abi: 'erc20:balanceOf',
+    abi: "erc20:balanceOf",
     calls,
     chain,
     block,
@@ -75,7 +81,13 @@ const bsc = async (timestamp, ethBlock, chainBlocks) => {
 
 const polygon = async (timestamp, ethBlock, chainBlocks) => {
   const transform = await transformPolygonAddress();
-  let balance = await _tvl(timestamp, ethBlock, chainBlocks, "polygon", transform);
+  let balance = await _tvl(
+    timestamp,
+    ethBlock,
+    chainBlocks,
+    "polygon",
+    transform
+  );
   return balance;
 };
 

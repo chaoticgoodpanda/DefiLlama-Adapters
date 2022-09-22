@@ -1,6 +1,5 @@
 const { calculateUsdUniTvl } = require("../helper/getUsdUniTvl");
-const { stakingPricedLP } = require('../helper/staking')
-
+const { stakingPricedLP } = require("../helper/staking");
 
 module.exports = {
   timetravel: true,
@@ -20,6 +19,12 @@ module.exports = {
       ],
       "wrapped-fantom"
     ),
-    staking: stakingPricedLP("0x546dA2105c52dc2dBA3a4320b43bc2cfDA9cB311", "0xF24be6c063Bee7c7844dD90a21fdf7d783d41a94", "fantom", "0x194C3973Eb43Ba98941C5e9D8e3D06EF9e6aa399", "wrapped-fantom")
+    staking: stakingPricedLP(
+      "0x546dA2105c52dc2dBA3a4320b43bc2cfDA9cB311",
+      "0xF24be6c063Bee7c7844dD90a21fdf7d783d41a94",
+      "fantom",
+      "0x194C3973Eb43Ba98941C5e9D8e3D06EF9e6aa399",
+      "wrapped-fantom"
+    ),
   },
-}; // node test.js projects/wingswap/index.js
+}; // node test.js projects/wingswap/-old.js

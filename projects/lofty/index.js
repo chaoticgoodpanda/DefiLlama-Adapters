@@ -1,9 +1,8 @@
-
-const sdk = require('@defillama/sdk');
-const { toUSDTBalances } = require('../helper/balances');
+const sdk = require("@defillama/sdk");
+const { toUSDTBalances } = require("../helper/balances");
 const retry = require("async-retry");
 const axios = require("axios");
-const { lookupApplications, } = require("../helper/algorand");
+const { lookupApplications } = require("../helper/algorand");
 
 const LoftyTVLApi = "https://api.lofty.ai/prod/properties/v2/valuations";
 
@@ -13,8 +12,8 @@ async function loftyTVL() {
       async (bail) =>
         await axios.get(LoftyTVLApi, {
           headers: {
-            'X-API-Client': 'DEFILLAMA'
-          }
+            "X-API-Client": "DEFILLAMA",
+          },
         })
     )
   ).data.data;
@@ -30,7 +29,7 @@ async function loftyTVL() {
 module.exports = {
   algorand: {
     tvl: loftyTVL,
-  }
+  },
 };
 
-// node test.js projects/lofty/index.js
+// node test.js projects/lofty/-old.js

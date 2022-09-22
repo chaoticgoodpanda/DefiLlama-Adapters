@@ -34,7 +34,7 @@ async function staking() {
   return alexResponse.reserve_pool_value;
 }
 
-// node test.js projects/alexlab/index.js
+// node test.js projects/alexlab/-old.js
 module.exports = {
   timetravel: false,
   stacks: {

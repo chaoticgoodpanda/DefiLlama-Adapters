@@ -17,4 +17,4 @@ module.exports = {
       "crypto-com-chain"
     ),
   },
-}; // node test.js projects/crodex/index.js
+}; // node test.js projects/crodex/-old.js

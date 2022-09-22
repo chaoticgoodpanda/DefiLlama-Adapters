@@ -17,9 +17,9 @@ module.exports = {
         "0x88d8C3Dc6B5324f34E8Cf229a93E197048671abD",
         "0xC1Be9a4D5D45BeeACAE296a7BD5fADBfc14602C4",
         "0xc9BAA8cfdDe8E328787E29b4B078abf2DaDc2055",
-        "0x332730a4F6E03D9C55829435f10360E13cfA41Ff"
+        "0x332730a4F6E03D9C55829435f10360E13cfA41Ff",
       ],
       "ethereum-classic"
     ),
   },
-}; // node test.js projects/etcswap/index.js
+}; // node test.js projects/etcswap/-old.js

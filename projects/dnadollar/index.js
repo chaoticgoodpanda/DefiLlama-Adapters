@@ -12,7 +12,7 @@ const USDC = "0xc21223249ca28397b4b6541dffaecc539bff0c59";
 const USDC_DSHARE_meerkatLP = "0xFe0F0d50175789C1F69B41dB797cc9ABd8Ab0120";
 
 const DShareRewardPool = "0x1A4bb8E03C35e2B672A0fcE18cab920aa023d7FC";
-// node test.js projects/dnadollar/index.js
+// node test.js projects/dnadollar/-old.js
 const stakingContracts = [
   "0xed94536A27922e2BD0eE661abF5fB030228d9D72",
   FundDAO,
@@ -56,7 +56,7 @@ const pool2 = async (chainBlocks) => {
 
     const getTokenBalance = (
       await sdk.api.abi.call({
-        abi: 'erc20:balanceOf',
+        abi: "erc20:balanceOf",
         target: token,
         params: DShareRewardPool,
         chain: "cronos",
@@ -108,5 +108,6 @@ module.exports = {
     pool2: pool2,
     tvl: cronosTvl,
   },
-  methodology: "Counts liquidity of the tokens deposited on the DAO Fund through the wallet Address; and Pool2s and Staking parts through DShareRewardPool and Laboratory Contracts.",
+  methodology:
+    "Counts liquidity of the tokens deposited on the DAO Fund through the wallet Address; and Pool2s and Staking parts through DShareRewardPool and Laboratory Contracts.",
 };

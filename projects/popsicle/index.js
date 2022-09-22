@@ -1,6 +1,6 @@
 const sdk = require("@defillama/sdk");
 const poolInfoAbi = require("../helper/abis/masterchef.json");
-const { sumTokensAndLPsSharedOwners } = require('../helper/unwrapLPs');
+const { sumTokensAndLPsSharedOwners } = require("../helper/unwrapLPs");
 const { addFundsInMasterChef } = require("../helper/masterchef");
 const {
   transformBscAddress,
@@ -48,26 +48,20 @@ async function fantomTvl(timestamp, block, chainBlocks) {
 
   await sumTokensAndLPsSharedOwners(
     balances,
-    [
-      ["0xddc0385169797937066bbd8ef409b5b3c0dfeb52", false],
-    ],
-    [
-      "0xFDB988aF9ef9D0C430176f972bA82B98b476F3ee",
-    ],
-    chainBlocks.fantom, "fantom", transform
+    [["0xddc0385169797937066bbd8ef409b5b3c0dfeb52", false]],
+    ["0xFDB988aF9ef9D0C430176f972bA82B98b476F3ee"],
+    chainBlocks.fantom,
+    "fantom",
+    transform
   );
 
   //wMEMO
   const memo = (
     await sdk.api.abi.call({
       target: "0x0da67235dd5787d67955420c84ca1cecd4e5bb3b",
-      params: [
-        balances["fantom:0xddc0385169797937066bbd8ef409b5b3c0dfeb52"],
-      ],
+      params: [balances["fantom:0xddc0385169797937066bbd8ef409b5b3c0dfeb52"]],
       abi: {
-        inputs: [
-          { internalType: "uint256", name: "_amount", type: "uint256" },
-        ],
+        inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
         name: "wMEMOToMEMO",
         outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
         stateMutability: "view",
@@ -81,7 +75,7 @@ async function fantomTvl(timestamp, block, chainBlocks) {
   delete balances["fantom:0xddc0385169797937066bbd8ef409b5b3c0dfeb52"];
 
   return balances;
-};
+}
 async function fantomStaking(timestamp, block, chainBlocks) {
   const transform = await transformFantomAddress();
   const balances = {};
@@ -96,12 +90,14 @@ async function fantomStaking(timestamp, block, chainBlocks) {
       "0xBC8d95Ab498502242b41fdaD30bDFfC841f436e2",
       "0xaE2e07276A77DAdE3378046eEd92FfDE3995b0D5",
     ],
-    chainBlocks.fantom, "fantom", transform
+    chainBlocks.fantom,
+    "fantom",
+    transform
   );
 
   //nICE
-  const nIce = 'fantom:0x7f620d7d0b3479b1655cefb1b0bc67fb0ef4e443';
-  const ice = '0xf16e81dce15B08F326220742020379B855B87DF9'
+  const nIce = "fantom:0x7f620d7d0b3479b1655cefb1b0bc67fb0ef4e443";
+  const ice = "0xf16e81dce15B08F326220742020379B855B87DF9";
   // if (nIce in balances){
   //   const nIceSupply = (
   //     await sdk.api.abi.call({
@@ -122,9 +118,9 @@ async function fantomStaking(timestamp, block, chainBlocks) {
   //   ).output
   //   const icePernICE = iceLocked / nIceSupply
 
-    // Then, multiply the staked spell balance by spell to staked spell ratio
-    balances[ice] = Number(balances[ice]) + Number(balances[nIce])// * icePernICE);
-    delete balances[nIce]
+  // Then, multiply the staked spell balance by spell to staked spell ratio
+  balances[ice] = Number(balances[ice]) + Number(balances[nIce]); // * icePernICE);
+  delete balances[nIce];
   //}
   return balances;
 }
@@ -133,7 +129,7 @@ const ethTvl = calcTvl("ethereum");
 const fantomPool2 = calcTvl("fantom");
 
 const bscTvl = calcTvl("bsc");
-// node test.js projects/popsicle/index.js
+// node test.js projects/popsicle/-old.js
 module.exports = {
   misrepresentedTokens: true,
   ethereum: {
@@ -146,7 +142,7 @@ module.exports = {
   fantom: {
     pool2: fantomPool2,
     tvl: fantomTvl,
-    staking: fantomStaking
+    staking: fantomStaking,
   },
   methodology: "We count pool2 liquidity staked on masterchef",
 };

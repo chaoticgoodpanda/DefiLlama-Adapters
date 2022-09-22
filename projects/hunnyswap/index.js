@@ -15,9 +15,9 @@ module.exports = {
         "0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
         "0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB",
         "0x264c1383EA520f73dd837F915ef3a732e204a493",
-        "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7"
+        "0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7",
       ],
       "wrapped-avax"
     ),
   },
-}; // node test.js projects/hunnyswap/index.js
+}; // node test.js projects/hunnyswap/-old.js

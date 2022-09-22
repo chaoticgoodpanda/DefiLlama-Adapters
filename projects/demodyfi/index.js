@@ -30,7 +30,9 @@ async function dmodBscStakingPool(timestamp, block, chainBlocks) {
     ).output
   );
 
-  return { 'demodyfi': stakingBalance.div(new BigNumber(10).pow(decimals)).toFixed(0) };
+  return {
+    demodyfi: stakingBalance.div(new BigNumber(10).pow(decimals)).toFixed(0),
+  };
 }
 async function dmodEthereumStakingPool(timestamp, block, chainBlocks) {
   const stakingBalance = new BigNumber(
@@ -40,7 +42,7 @@ async function dmodEthereumStakingPool(timestamp, block, chainBlocks) {
         chain: "ethereum",
         target: "0x5f6c5c2fb289db2228d159c69621215e354218d7",
         params: ["0x024D59Ac0Bb03dEd28B9A16cd50B3d242B43a683"],
-        block
+        block,
       })
     ).output
   );
@@ -52,12 +54,14 @@ async function dmodEthereumStakingPool(timestamp, block, chainBlocks) {
         chain: "ethereum",
         target: "0x5f6c5c2fb289db2228d159c69621215e354218d7",
         params: [],
-        block
+        block,
       })
     ).output
   );
 
-  return { 'demodyfi': stakingBalance.div(new BigNumber(10).pow(decimals)).toFixed(0) };
+  return {
+    demodyfi: stakingBalance.div(new BigNumber(10).pow(decimals)).toFixed(0),
+  };
 }
 async function dmodBscLPPool(timestamp, block, chainBlocks) {
   const transform = await transformBscAddress();
@@ -100,7 +104,7 @@ async function dmodEthereumLPPool(timestamp, block, chainBlocks) {
         chain: "ethereum",
         target: "0xD5B1Cd8D245A93E0697707AEe82497388508b132",
         params: ["0x024D59Ac0Bb03dEd28B9A16cd50B3d242B43a683"],
-        block
+        block,
       })
     ).output
   );
@@ -125,12 +129,12 @@ module.exports = {
   ethereum: {
     tvl: () => ({}),
     staking: dmodEthereumStakingPool,
-    pool2: dmodEthereumLPPool
+    pool2: dmodEthereumLPPool,
   },
   bsc: {
     tvl: () => ({}),
     staking: dmodBscStakingPool,
-    pool2: dmodBscLPPool
+    pool2: dmodBscLPPool,
   },
   moonbeam: {
     tvl: calculateUsdUniTvl(
@@ -142,4 +146,4 @@ module.exports = {
     ),
   },
 };
-// node test.js projects/demodyfi/index.js
+// node test.js projects/demodyfi/-old.js

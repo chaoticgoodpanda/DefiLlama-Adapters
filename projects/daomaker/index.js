@@ -4,61 +4,66 @@ const { getChainTransform } = require("../helper/portedTokens");
 const contracts = require("./contracts.json");
 const axios = require("axios");
 
-async function fetchBalances(exports, contracts, transform, chainBlocks, chain) {
-    if (!contracts[chain]) return 0;
+async function fetchBalances(
+  exports,
+  contracts,
+  transform,
+  chainBlocks,
+  chain
+) {
+  if (!contracts[chain]) return 0;
 
-    const balances = await sdk.api.abi.multiCall({
-        calls: Object.keys(contracts[chain]).map(c => ({
-            target: contracts[chain][c].tokenAddress,
-            params: [ contracts[chain][c].tokenHolder ]
-        })),
-        abi: "erc20:balanceOf",
-        block: chainBlocks[chain],
-        chain
-    });
+  const balances = await sdk.api.abi.multiCall({
+    calls: Object.keys(contracts[chain]).map((c) => ({
+      target: contracts[chain][c].tokenAddress,
+      params: [contracts[chain][c].tokenHolder],
+    })),
+    abi: "erc20:balanceOf",
+    block: chainBlocks[chain],
+    chain,
+  });
 
-    sdk.util.sumMultiBalanceOf(exports, balances, false, transform);
-};
+  sdk.util.sumMultiBalanceOf(exports, balances, false, transform);
+}
 
-// node test.js projects/daomaker/index.js
+// node test.js projects/daomaker/-old.js
 function tvl(chain) {
-    return async (timestamp, block, chainBlocks) => {
-        const balances = {};
-        const transform = await getChainTransform(chain);
+  return async (timestamp, block, chainBlocks) => {
+    const balances = {};
+    const transform = await getChainTransform(chain);
 
-        const vestingContracts = (await axios.get("https://api.daomaker.com/get-all-vesting-contracts")).data;
-        const clientVesting = {};
-        for (const vestingContract of vestingContracts) {
-            if (!clientVesting[vestingContract.chain_name]) {
-                clientVesting[vestingContract.chain_name] = {};
-            }
-            clientVesting[vestingContract.chain_name][vestingContract.vesting_smart_contract_address] = {
-                tokenHolder: vestingContract.vesting_smart_contract_address,
-                tokenAddress: vestingContract.token_address
-            };
-        }
+    const vestingContracts = (
+      await axios.get("https://api.daomaker.com/get-all-vesting-contracts")
+    ).data;
+    const clientVesting = {};
+    for (const vestingContract of vestingContracts) {
+      if (!clientVesting[vestingContract.chain_name]) {
+        clientVesting[vestingContract.chain_name] = {};
+      }
+      clientVesting[vestingContract.chain_name][
+        vestingContract.vesting_smart_contract_address
+      ] = {
+        tokenHolder: vestingContract.vesting_smart_contract_address,
+        tokenAddress: vestingContract.token_address,
+      };
+    }
 
-        await fetchBalances(
-            balances, 
-            clientVesting, 
-            transform, 
-            chainBlocks, 
-            chain
-        );
+    await fetchBalances(balances, clientVesting, transform, chainBlocks, chain);
 
-        return balances;
-    };
-};
+    return balances;
+  };
+}
 
 const chainTVLObject = contracts.chains.reduce(
-    (agg, chain) => ({ ...agg, [chain]: {tvl: tvl(chain) }}), {}
+  (agg, chain) => ({ ...agg, [chain]: { tvl: tvl(chain) } }),
+  {}
 );
 
 chainTVLObject.ethereum.staking = stakings(
-    [ contracts.stakingContractEth ], 
-    contracts.stakingTokenEth
+  [contracts.stakingContractEth],
+  contracts.stakingTokenEth
 );
 
 module.exports = {
-    ...chainTVLObject
+  ...chainTVLObject,
 };

@@ -17,7 +17,7 @@ If you have any suggestions, want to contribute or want to chat, please join [ou
 
 ## Testing adapters
 ```
-node test.js projects/pangolin/index.js
+node test.js projects/pangolin/-old.js
 ```
 
 ## Changing RPC providers

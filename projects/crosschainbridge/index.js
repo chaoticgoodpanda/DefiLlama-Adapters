@@ -3,23 +3,23 @@ const BigNumber = require("bignumber.js");
 
 const getBridgeContract = (chain) => {
   switch (chain) {
-    case 'avax':
-      return '0x46325c7005F04900F8D74cD0eAB903597b6EFFFF';
+    case "avax":
+      return "0x46325c7005F04900F8D74cD0eAB903597b6EFFFF";
     default:
-      return '0xCBCe172d7af2616804ab5b2494102dAeC47B2635';
+      return "0xCBCe172d7af2616804ab5b2494102dAeC47B2635";
   }
-}
+};
 
 const getRewardPools = (chain) => {
   switch (chain) {
-    case 'avax':
-      return '0xbAb537b7AE2Fcb00eeA7e91Fa4782EEbaD3B6d10';
-    case 'fantom':
-      return '0x6eBC0D4Ae955218195E6D016Fb9D4358Ee34d1F9';
+    case "avax":
+      return "0xbAb537b7AE2Fcb00eeA7e91Fa4782EEbaD3B6d10";
+    case "fantom":
+      return "0x6eBC0D4Ae955218195E6D016Fb9D4358Ee34d1F9";
     default:
-      return '0x0BDC1f983bC82B8F6F6BCcbF9810A9cdC1FE455f';
+      return "0x0BDC1f983bC82B8F6F6BCcbF9810A9cdC1FE455f";
   }
-}
+};
 
 /*
  * TOKEN CONFIGURATION
@@ -119,7 +119,7 @@ const tokens = {
     USDT: "0x049d68029688eabf473097a2fc38ef61633a3c7a",
     // Network Tokens
     WETH: "0x74b23882a30290451A17c44f4F05243b6b58C76d",
-  }
+  },
 };
 
 /*
@@ -148,24 +148,27 @@ const createTvlFunction = (chain) => async (timestamp, block, chainBlocks) => {
   return balances;
 };
 
-const createRewardPoolsTvlFunction = (chain) => async (timestamp, block, chainBlocks) => {
-  const bridgeTokenAddress = tokens[chain].BRIDGE;
-  const rewardPoolsContract = getRewardPools(chain);
+const createRewardPoolsTvlFunction =
+  (chain) => async (timestamp, block, chainBlocks) => {
+    const bridgeTokenAddress = tokens[chain].BRIDGE;
+    const rewardPoolsContract = getRewardPools(chain);
 
-  if (!bridgeTokenAddress) return 0;
+    if (!bridgeTokenAddress) return 0;
 
-  let tokenBalance = BigNumber(0);
+    let tokenBalance = BigNumber(0);
 
-  const resultRewardPools = await sdk.api.erc20.balanceOf({
-    target: bridgeTokenAddress,
-    owner: rewardPoolsContract,
-    chain,
-    block: chainBlocks[chain],
-  });
-  tokenBalance = tokenBalance.plus(resultRewardPools.output);
+    const resultRewardPools = await sdk.api.erc20.balanceOf({
+      target: bridgeTokenAddress,
+      owner: rewardPoolsContract,
+      chain,
+      block: chainBlocks[chain],
+    });
+    tokenBalance = tokenBalance.plus(resultRewardPools.output);
 
-  return { [`${getAddrPrefix(chain)}${bridgeTokenAddress}`] : tokenBalance.toFixed() };
-};
+    return {
+      [`${getAddrPrefix(chain)}${bridgeTokenAddress}`]: tokenBalance.toFixed(),
+    };
+  };
 
 const toExport = {};
 for (const network of Object.keys(tokens)) {
@@ -176,4 +179,4 @@ for (const network of Object.keys(tokens)) {
 }
 
 module.exports = toExport;
-// node test.js projects/crosschainbridge/index.js
+// node test.js projects/crosschainbridge/-old.js
